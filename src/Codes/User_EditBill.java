@@ -40,7 +40,7 @@ public class User_EditBill extends javax.swing.JFrame {
         
         
          try {
-           String getItemsBillSQL = "SELECT No,Cname,Cid,Iname,Iid,Quantity,Date FROM customer_item_bills";
+           String getItemsBillSQL = "SELECT No,Cname,Cid,Iname,Iid,Billid,Quantity,Date FROM customer_item_bills";
            pst = con.prepareStatement(getItemsBillSQL);
            //get the execute result and assign into rs
            rs = pst.executeQuery();

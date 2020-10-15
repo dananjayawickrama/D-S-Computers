@@ -1,6 +1,7 @@
 
 package Codes;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -9,12 +10,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 public class User_Sales extends javax.swing.JFrame {
     
-    
+
+     //set Time
+     public final Timer timer;
+     public final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+           
        
     //first connect should be null
     Connection con = null;
@@ -37,10 +43,16 @@ public class User_Sales extends javax.swing.JFrame {
         
         displayNextBillNo();
         setReciptDetails();
+        
+        
+        timer = new Timer(500, (ActionEvent e) -> {
+            timeJL.setText(sdf.format(new java.util.Date(System.currentTimeMillis())));
+            });
+            timer.setRepeats(true);
+            timer.start();
     }
 
-    
-        
+      
 public void itemsTableLoad(){
        
        try {
@@ -60,8 +72,10 @@ public void itemsTableLoad(){
 
 private void setReciptDetails(){
    
-    
-jTextArea1.setText("\t      D & S Computers Malabe\n\t\t  No120 Temple Road\n\t\t     Malabe\n\t\tTel No +9426514588\n*************************************************\n\n");
+       String billNo = jTextField7.getText();
+      
+                                                                                                                                                 
+jTextArea1.setText("\t      CASH RECEIPT\n  ...........................................  \n  Shop Name                   D&S Computers\n  Bill No                     "+billNo+"\n  *******************************************\n  Description                 Price\n\n");
     
     
   
@@ -164,6 +178,7 @@ public void displayCustomerId(){
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        timeJL = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,6 +358,11 @@ public void displayCustomerId(){
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jButton6.setText("Print");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Customer Payment", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 24), new java.awt.Color(255, 51, 0))); // NOI18N
@@ -372,6 +392,11 @@ public void displayCustomerId(){
 
         jButton8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jButton8.setText("ADD ");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton9.setText("Calculate ");
@@ -438,6 +463,8 @@ public void displayCustomerId(){
             }
         });
 
+        timeJL.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -462,7 +489,8 @@ public void displayCustomerId(){
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(timeJL, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -540,28 +568,36 @@ public void displayCustomerId(){
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(36, 36, 36)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButton5)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton5)
+                        .addComponent(timeJL, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addComponent(jButton6)
                         .addGap(75, 75, 75))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -763,7 +799,7 @@ public void displayCustomerId(){
        String itemPrice = iprice.getText();
        String itemQuantity = cquantity.getSelectedItem().toString();
        String itemTotalPrice = ctotal.getText();
-       
+       String billId = jTextField7.getText();
        
     
        
@@ -779,7 +815,7 @@ public void displayCustomerId(){
             
             try {
                     //insert Bills into table( customer_item_bills Table)
-                    String insertallItemsBillsSQL = "INSERT INTO customer_item_bills(Cname,Cid,Iname,Iid,Iprice,Quantity,Price,Date) VALUES('"+ customerName +"','"+ customerId +"','"+ itemName +"','"+ itemId +"','"+ itemPrice +"','"+ itemQuantity +"','"+ itemTotalPrice +"','"+ selectDate +"')";
+                    String insertallItemsBillsSQL = "INSERT INTO customer_item_bills(Cname,Cid,Iname,Iid,Billid,Iprice,Quantity,Price,Date) VALUES('"+ customerName +"','"+ customerId +"','"+ itemName +"','"+ itemId +"','"+ billId +"','"+ itemPrice +"','"+ itemQuantity +"','"+ itemTotalPrice +"','"+ selectDate +"')";
                     pst = con.prepareStatement(insertallItemsBillsSQL);
                     pst.execute();
                     
@@ -820,7 +856,8 @@ public void displayCustomerId(){
                     String iTotal = Double.toString(itotalPrice);
                     String quantityes = Integer.toString(itemQu);
                     //String insertitemDetailsIntoRecipt = itemName+"\t\t"+quantityes+"\t\t"+itemPrice+"\t"+iTotal+"\n";
-                    jTextArea1.setText(jTextArea1.getText()+iname.getText()+"\n"+quantityes+" * "+iprice.getText()+"\t\t"+iTotal+"\n");
+                    
+                    jTextArea1.setText(jTextArea1.getText()+"  "+iname.getText()+"\n  "+quantityes+" * "+iprice.getText()+"\t\t      "+iTotal+"\n");
                     
                     cfulltotal.setText(ftotal);
                     iname.setText(null);
@@ -829,10 +866,6 @@ public void displayCustomerId(){
         
                     cquantity.setSelectedItem("0");
 
-                    
-                    
-                    
-                    
                     
                     }
                   }catch (Exception e){
@@ -850,10 +883,7 @@ public void displayCustomerId(){
        }
        
        
-       
-       
-       
-       
+
   
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -894,14 +924,21 @@ public void displayCustomerId(){
         
         String fullTotal = cfulltotal.getText();
         String cash = cpaid.getText();
-         double fTotal1 = Double.parseDouble(fullTotal);
+        
+        
+        double fTotal1 = Double.parseDouble(fullTotal);
+       // double cCash = Double.parseDouble(cash);
       
         if(cpaid.getText().isEmpty())
                 JOptionPane.showMessageDialog(null, "Plz Enter Cash");
         else if(fTotal1 == 0){
                 JOptionPane.showMessageDialog(null, "Total Amount is Zero");
                 cpaid.setText(null);
+        }else if(Double.parseDouble(cash) < fTotal1){
+                JOptionPane.showMessageDialog(null, "Cash not enough to buy this items");
+                cpaid.setText(null);
         }else{
+        
                 String fT = Double.toString(fTotal1);
                 
             try {
@@ -928,6 +965,68 @@ public void displayCustomerId(){
 
        
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        
+        if(balance.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Select Items");
+        }else{
+            
+        
+        String cusfulltotal = cfulltotal.getText();
+        String cuspaid = cpaid.getText();
+        String cusbalance = balance.getText();
+        String selectDate = ((JTextField)cdate.getDateEditor().getUiComponent()).getText();
+        
+        
+                                                                                                                                                                                                                                                        
+        jTextArea1.setText(jTextArea1.getText()+"\n"+"\n  Full Total                  "+cusfulltotal+"\n  Cash                        "+cuspaid+"\n  Balance                     "+cusbalance+"\n  ------------------------------------------- "+"\n            "+"Thank You For Shopping!"+"\n                  "+selectDate);
+        
+  
+        }
+        
+        
+       
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        
+        if(balance.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Select Items");
+        }else{
+            
+                 try {
+            
+        String cName = cname.getText();
+        String cId = cid.getText();
+        String fullTotal = cfulltotal.getText();
+        String cash = cpaid.getText();   
+        String billNo = jTextField7.getText();
+        String cBalance = balance.getText();
+         String selectDate = ((JTextField)cdate.getDateEditor().getUiComponent()).getText();  
+         
+         String insertallItemsBillsSQL = "INSERT INTO customers_final_total_bills(Billno,Cname,Cid,Date,Total,Cash,Balance) VALUES('"+ billNo +"','"+ cName +"','"+ cId +"','"+ selectDate +"','"+ fullTotal +"','"+ cash +"','"+ cBalance +"')";
+         pst = con.prepareStatement(insertallItemsBillsSQL);
+         pst.execute();
+            
+            
+            
+            
+        jTextArea1.setText(jTextArea1.getText());
+        jTextArea1.print();
+        
+  
+        
+        } catch (Exception e) {
+        } 
+            
+        }
+        
+        
+  
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1011,5 +1110,6 @@ public void displayCustomerId(){
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel timeJL;
     // End of variables declaration//GEN-END:variables
 }
