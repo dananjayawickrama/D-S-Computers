@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -142,7 +143,6 @@ public void displayCustomerId(){
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -219,12 +219,14 @@ public void displayCustomerId(){
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Search");
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Search");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 0, 51));
@@ -549,9 +551,7 @@ public void displayCustomerId(){
                                         .addGap(160, 160, 160)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 911, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -607,8 +607,7 @@ public void displayCustomerId(){
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel4)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1012,7 +1011,10 @@ public void displayCustomerId(){
          pst = con.prepareStatement(insertallItemsBillsSQL);
          pst.execute();
             
-            
+         //insert data into onedaybill table
+         String insertItemsBillsOneDayTableSQL = "INSERT INTO onedaybills(Billno,Cname,Cid,Date,Total,Cash,Balance) VALUES('"+ billNo +"','"+ cName +"','"+ cId +"','"+ selectDate +"','"+ fullTotal +"','"+ cash +"','"+ cBalance +"')";
+         pst = con.prepareStatement(insertItemsBillsOneDayTableSQL);
+         pst.execute();    
             
             
         jTextArea1.setText(jTextArea1.getText());
@@ -1028,6 +1030,30 @@ public void displayCustomerId(){
         
   
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+         String Search = jTextField1.getText();
+        
+        
+
+        if (Search.matches("^[0-9]+{2}+$")) {
+            JOptionPane.showMessageDialog(null, "Please enter Item name only!");
+            jTextField1.setText(null);
+          
+        } else {
+                 
+            String sql = "SELECT Id,Name,Sell_Price,Quantity FROM admin_itemstable where Name LIKE '%" + Search + "%'";
+
+            try {
+                pst = con.prepareStatement(sql);
+                rs = pst.executeQuery();
+                jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException ex) {
+
+            }
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
 
     /**
      * @param args the command line arguments
@@ -1075,7 +1101,6 @@ public void displayCustomerId(){
     private javax.swing.JTextField ctotal;
     private javax.swing.JTextField iname;
     private javax.swing.JTextField iprice;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

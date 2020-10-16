@@ -102,7 +102,6 @@ public void itemsTableLoad(){
         jScrollPane1 = new javax.swing.JScrollPane();
         itemsjTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         item_ID_jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -133,6 +132,8 @@ public void itemsTableLoad(){
         jTextField2_Item_Id = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pharmacy.png"))); // NOI18N
 
@@ -169,8 +170,11 @@ public void itemsTableLoad(){
         });
         jScrollPane1.setViewportView(itemsjTable1);
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton2.setText("Search");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 0, 51));
@@ -262,6 +266,7 @@ public void itemsTableLoad(){
         jDateChooser2_idate.setDateFormatString("yyyy-MM-dd");
         jDateChooser2_idate.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
+        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -393,9 +398,7 @@ public void itemsTableLoad(){
                         .addGap(18, 18, 18)
                         .addComponent(item_ID_jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1509, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -422,11 +425,9 @@ public void itemsTableLoad(){
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(item_ID_jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(5, 5, 5)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
                         .addGap(29, 29, 29))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -469,7 +470,7 @@ public void itemsTableLoad(){
                             .addComponent(jLabel13)
                             .addComponent(jTextField10_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21))))
         );
@@ -633,6 +634,7 @@ public void itemsTableLoad(){
         if(name.isEmpty() && supplier.isEmpty() && purchasePrice.isEmpty() && sellprice.isEmpty() && quantity.isEmpty() && itemFulltotalPrice.isEmpty())
             JOptionPane.showMessageDialog(null, "Empty Field");
         else{
+            
         int y = JOptionPane.showConfirmDialog(null, "Do You Want To Update(!!You Can Update Only If the Quantity Zeoro!!)");
         
         if(y == 0){
@@ -650,34 +652,45 @@ public void itemsTableLoad(){
           String i_date = insert_date.toString();
                                     
       
-          int itemQuantity = Integer.parseInt(quantity);
           
-          if(itemQuantity == 0){
+          
+          
        
-          String itemSql = "UPDATE admin_itemstable SET Name = '"+ name +"',P_date = '"+ p_date +"',I_Date = '"+ i_date +"',Supplier = '"+ supplier +"',Purchase_Price = '"+ purchasePrice +"',Sell_Price = '"+ sellprice +"',Quantity = '"+ quantity +"',Total_price = '"+ itemFulltotalPrice +"' WHERE Id = '"+ itemId +"'";
-          pst = con.prepareStatement(itemSql);
-          pst.execute();
-          JOptionPane.showMessageDialog(null, name+" Updated");
-          itemsTableLoad();
           
-          
-          
-           String getcurrentQuantity = "SELECT Quantity FROM admin_itemstable WHERE Id = '"+ itemId +"'";      
-           pst = con.prepareStatement(getcurrentQuantity);
+           String getcurrentQuantity1 = "SELECT Quantity FROM admin_itemstable WHERE Quantity = '"+ 0 +"'";      
+           pst = con.prepareStatement(getcurrentQuantity1);
            //get the execute result and assign into rs
            rs = pst.executeQuery();
            //assign into food table
            if(rs.next()){
-            String currentQuantity2 = rs.getString("Quantity");
+               
+            String currentQuantity22 = rs.getString("Quantity");
+            int cq = Integer.parseInt(currentQuantity22);
+            
+            if(cq == 0){
+                
+                String itemSql = "UPDATE admin_itemstable SET Name = '"+ name +"',P_date = '"+ p_date +"',I_Date = '"+ i_date +"',Supplier = '"+ supplier +"',Purchase_Price = '"+ purchasePrice +"',Sell_Price = '"+ sellprice +"',Quantity = '"+ quantity +"',Total_price = '"+ itemFulltotalPrice +"' WHERE Id = '"+ itemId +"'";
+                pst = con.prepareStatement(itemSql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, name+" Updated");
+                itemsTableLoad();
+                
+                String getcurrentQuantity = "SELECT Quantity FROM admin_itemstable WHERE Id = '"+ itemId +"'";      
+                pst = con.prepareStatement(getcurrentQuantity);
+                //get the execute result and assign into rs
+                rs = pst.executeQuery();
+                //assign into food table
+                if(rs.next()){
+                    String currentQuantity2 = rs.getString("Quantity");
    
-            //insert item into another table( admin_insert_all_itemstable Table)
-            String insertallItemsSQL = "INSERT INTO admin_insert_all_itemstable(Item_Id,Item_Name,Date,Supplier,Current_Quantity,Quantity,Status) VALUES('"+ itemId +"','"+ name +"','"+ i_date +"','"+ supplier +"','"+ currentQuantity2 +"','"+ quantity +"','"+ status +"')";
-            pst = con.prepareStatement(insertallItemsSQL);
-            pst.execute();
+                    //insert item into another table( admin_insert_all_itemstable Table)
+                    String insertallItemsSQL = "INSERT INTO admin_insert_all_itemstable(Item_Id,Item_Name,Date,Supplier,Current_Quantity,Quantity,Status) VALUES('"+ itemId +"','"+ name +"','"+ i_date +"','"+ supplier +"','"+ currentQuantity2 +"','"+ quantity +"','"+ status +"')";
+                    pst = con.prepareStatement(insertallItemsSQL);
+                    pst.execute();
     
              }
-
-          }else{
+               
+            }else{
               
               JOptionPane.showMessageDialog(this, "Quantity is not Zero! Not Updated!","Update Error!!", JOptionPane.ERROR_MESSAGE);
               refreshAllTextBox();
@@ -685,6 +698,10 @@ public void itemsTableLoad(){
                  jTextField8_sellprice.enable();
                  jTextField9_quantity.enable();
           }
+            
+    
+           }  
+  
 
             }catch(Exception e){
                 
@@ -803,6 +820,31 @@ public void itemsTableLoad(){
         jTextField9_quantity.enable();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+        // TODO add your handling code here:
+        
+         String Search = jTextField1.getText();
+        
+        
+
+        if (Search.matches("^[0-9]+{2}+$")) {
+            JOptionPane.showMessageDialog(null, "Please enter Item Name only!");
+            jTextField1.setText("");
+          
+        } else {
+                 
+            String sql = "SELECT Id,Name,P_date,I_Date,Supplier,Purchase_Price,Sell_Price,Quantity,Total_price FROM admin_itemstable WHERE Name LIKE '%" + Search + "%'";
+
+            try {
+                pst = con.prepareStatement(sql);
+                rs = pst.executeQuery();
+                itemsjTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            } catch (SQLException ex) {
+
+            }
+        }
+    }//GEN-LAST:event_jTextField1KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -842,7 +884,6 @@ public void itemsTableLoad(){
     private javax.swing.JTextField item_ID_jTextField2;
     private javax.swing.JTable itemsjTable1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
